@@ -1,3 +1,44 @@
+<?php
+// inizializiare numero lunghezza password scelto da utente
+$passwordLength =  isset($_GET['lengthPassword']) ? intval($_GET['lengthPassword']) : 0;
+
+// array contenente tutte le lettere minuscole
+$minuscole = range('a', 'z');
+
+// array contenente tutte le lettere maiuscole
+$maiuscole = range('A', 'Z');
+
+// array contenente i numeri da 0 a 9
+$numeri = range(0, 9);
+
+// array contenente alcuni caratteri speciali
+$caratteriSpeciali = array('!', '@', '#', '$', '%', '&', '*', '(', ')');
+
+// unione di tutti gli array
+$completo = array_merge($minuscole, $maiuscole, $numeri, $caratteriSpeciali);
+
+
+
+
+// funzione che genera la password con lunghezza desiderata
+function generatePassword($passwordLength, $completo)
+{
+    
+    $chiaviCasuali = array_rand($completo, $passwordLength);
+    $password = '';
+    foreach ($chiaviCasuali as $chiave) {
+        $password .= $completo[$chiave];
+    }
+    return $password;
+}
+
+
+
+
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="it">
 
@@ -20,6 +61,11 @@
                 <div class="bg-dark-subtle rounded text-dark p-3">
                     <form action="" method="GET">
                         <div class="form-row mb-3">
+                            <div class=" col rounded bg-success">
+                                <?php if ($passwordLength != 0) { ?>
+                                    <p class="fs-3"><?php echo generatePassword($passwordLength, $completo) ?></p>
+                                <?php } ?>
+                            </div>
                             <div class="col mt-4 d-flex gap-5">
                                 <label for="lengthPassword">Lunghezza password</label>
                                 <input type="number" class="form-control" name="lengthPassword" id="lengthPassword" min="1" max="16" placeholder="Inserisci un numero da 1 a 16">
