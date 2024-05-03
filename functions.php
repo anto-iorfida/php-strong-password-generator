@@ -18,14 +18,28 @@ $completo = array_merge($minuscole, $maiuscole, $numeri, $caratteriSpeciali);
 
 
 // funzione che genera la password con lunghezza desiderata
-function generatePassword($passwordLength, $completo)
+function generatePassword($passwordLength, $completo, $duplicatesChecked)
 {
-    
-    $chiaviCasuali = array_rand($completo, $passwordLength);
+
     $password = '';
-    foreach ($chiaviCasuali as $chiave) {
-        $password .= $completo[$chiave];
+
+    // creare ciclo while per non avere doppioni
+    while (strlen($password) < $passwordLength) {
+        // generare più indici casuale da completo di caratteri
+        $randomIndex = array_rand($completo);
+
+        // in questa variabile ci sono i caratteri, presi dalla variabile $completo, casuali con duplicati 
+        $charRandon = $completo[$randomIndex];
+        // se il check e impostato su si e quindi e true allora non c'è il filtro ,quindi ci sono duplicati
+        if ($duplicatesChecked) {
+            $password .= $charRandon;
+        } else {
+            // verificare se il carattere casuale è già presente nella password
+            if (strpos($password, $charRandon) === false) {
+                // se  carattere non è presente, aggiungiungere alla password
+                $password .= $charRandon;
+            }
+        }
     }
     return $password;
 }
-?>

@@ -2,8 +2,13 @@
 require_once __DIR__ . '/functions.php';
 // inizializiare numero lunghezza password scelto da utente
 $passwordLength =  isset($_GET['lengthPassword']) ? intval($_GET['lengthPassword']) : 0;
+// inizializiazione variabile consecuzione caratteri
+$duplicatesChecked = isset($_GET['duplicates']) && $_GET['duplicates'] === 'si';
 
+// variabile su true se si è selezionato
+$duplicates = $duplicatesChecked ? true : false;
 
+var_dump($duplicates )
 ?>
 
 <!DOCTYPE html>
@@ -30,12 +35,29 @@ $passwordLength =  isset($_GET['lengthPassword']) ? intval($_GET['lengthPassword
                         <div class="form-row mb-3">
                             <div class=" col rounded bg-success">
                                 <?php if ($passwordLength != 0) { ?>
-                                    <p class="fs-3"><?php echo generatePassword($passwordLength, $completo) ?></p>
+                                    <p class="fs-3"><?php echo generatePassword($passwordLength, $completo,$duplicatesChecked) ?></p>
                                 <?php } ?>
                             </div>
                             <div class="col mt-4 d-flex gap-5">
                                 <label for="lengthPassword">Lunghezza password</label>
                                 <input type="number" class="form-control" name="lengthPassword" id="lengthPassword" min="1" max="16" placeholder="Inserisci un numero da 1 a 16">
+                            </div>
+                            <div class="col mt-4 d-flex gap-5">
+                                <label for="lengthPassword">Ripetizione carattere consecutivo</label>
+                                <div class="d-flex flex-column">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="duplicates" id="duplicates1" value="si">
+                                        <label class="form-check-label" for="duplicates1">
+                                            si
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="duplicates" id="duplicates2" value="no" checked>
+                                        <label class="form-check-label" for="duplicates2">
+                                            no
+                                        </label>
+                                    </div>
+                                </div>
                             </div>
                             <div class="col">
                                 <button type="submit" class="btn btn-primary mt-4">Invia</button>
