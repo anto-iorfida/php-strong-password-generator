@@ -11,8 +11,23 @@ $numeri = range(0, 9);
 // array contenente alcuni caratteri speciali
 $caratteriSpeciali = array('!', '@', '#', '$', '%', '&', '*', '(', ')');
 
+session_start();
+// variabile che può assumere valore 1 o 2 o 3
+$_SESSION['checkBoxValue'] ;
+
+$checkBoxValue = $_SESSION['checkBoxValue'];
+
+
 // unione di tutti gli array
-$completo = array_merge($minuscole, $maiuscole, $numeri, $caratteriSpeciali);
+if($checkBoxValue == 1){
+    $completo = array_merge( $numeri, $caratteriSpeciali);
+}elseif($checkBoxValue == 2){
+    $completo = array_merge($minuscole, $maiuscole,  $caratteriSpeciali);
+}elseif($checkBoxValue == 3){
+    $completo = array_merge($minuscole, $maiuscole, $numeri);
+}elseif($checkBoxValue == null){
+    $completo = array_merge($minuscole, $maiuscole, $numeri, $caratteriSpeciali);
+}
 
 
 
